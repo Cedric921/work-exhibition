@@ -16,6 +16,12 @@ export abstract class UserEntity {
   name: string;
 
   @Column({ type: 'text' })
+  email: string;
+
+  @Column({ type: 'text' })
+  password: string;
+
+  @Column({ type: 'text' })
   lastName: string;
 
   @Column({ type: 'text' })
