@@ -3,7 +3,7 @@ import { UserService } from './user.service';
 import { CreateUserDTO, UpdateUserDTO } from './dto/user.dto';
 import { Post } from '@nestjs/common/decorators';
 
-@Controller('user')
+@Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -18,7 +18,7 @@ export class UserController {
   }
 
   @Post()
-  createUser(@Body() dto: CreateUserDTO) {
+  createUser(@Body() dto: any) {
     return this.userService.createUser(dto);
   }
 

@@ -1,14 +1,8 @@
-import {
-  Column,
-  CreateDateColumn,
-  DeleteDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { TimestampEntity } from 'src/config/global.entity';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'user' })
-export abstract class UserEntity {
+export abstract class UserEntity extends TimestampEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -24,7 +18,7 @@ export abstract class UserEntity {
   @Column({ type: 'text' })
   lastName: string;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'text', nullable: true })
   biography?: string;
 
   @Column({ type: 'text' })
@@ -32,13 +26,4 @@ export abstract class UserEntity {
 
   @Column({ type: 'text', nullable: true })
   avatar?: string;
-
-  @CreateDateColumn()
-  createddAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
-
-  @DeleteDateColumn()
-  deletedAt: Date;
 }

@@ -3,21 +3,16 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
-  Max,
   Min,
 } from 'class-validator';
 
 export class CreateUserDTO {
   @IsString()
   @IsNotEmpty()
-  @Min(3)
-  @Max(50)
   name: string;
 
   @IsString()
   @IsNotEmpty()
-  @Min(3)
-  @Max(50)
   lastName: string;
 
   @IsString()
@@ -27,8 +22,6 @@ export class CreateUserDTO {
 
   @IsString()
   @IsNotEmpty()
-  @Min(6)
-  @Max(50)
   password: string;
 
   @IsString()
@@ -44,14 +37,10 @@ export class CreateUserDTO {
 export class UpdateUserDTO {
   @IsString()
   @IsOptional()
-  @Min(3)
-  @Max(50)
   name: string;
 
   @IsString()
   @IsOptional()
-  @Min(3)
-  @Max(50)
   lastName: string;
 
   @IsString()
@@ -61,8 +50,6 @@ export class UpdateUserDTO {
 
   @IsString()
   @IsOptional()
-  @Min(6)
-  @Max(50)
   password: string;
 
   @IsString()
