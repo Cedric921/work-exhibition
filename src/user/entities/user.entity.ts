@@ -30,8 +30,8 @@ export abstract class UserEntity {
   @Column({ type: 'text' })
   tel: string;
 
-  @Column({ type: 'text' })
-  avatar: string;
+  @Column({ type: 'text', nullable: true })
+  avatar?: string;
 
   @CreateDateColumn()
   createddAt: Date;

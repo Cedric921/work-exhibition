@@ -1,5 +1,7 @@
 import { Body, Controller, Get, Param, Put } from '@nestjs/common';
 import { UserService } from './user.service';
+import { CreateUserDTO, UpdateUserDTO } from './dto/user.dto';
+import { Post } from '@nestjs/common/decorators';
 
 @Controller('user')
 export class UserController {
@@ -15,8 +17,13 @@ export class UserController {
     return this.userService.getUserData(userId);
   }
 
+  @Post()
+  createUser(@Body() dto: CreateUserDTO) {
+    return this.userService.createUser(dto);
+  }
+
   @Put(':id')
-  updateUserData(@Param('id') id: string, @Body() dto: any) {
+  updateUserData(@Param('id') id: string, @Body() dto: UpdateUserDTO) {
     return this.userService.updateUserData(id, dto);
   }
 }

@@ -2,6 +2,7 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './entities/user.entity';
 import { Repository } from 'typeorm';
+import { CreateUserDTO, UpdateUserDTO } from './dto/user.dto';
 
 @Injectable()
 export class UserService {
@@ -28,9 +29,18 @@ export class UserService {
     }
   }
 
+  async createUser(dto: CreateUserDTO) {
+    try {
+      const data = await this.userRepository.save(dto);
+      return { message: 'user data', data };
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
+  }
+
   async updateUserData(
     id: string,
-    user: any,
+    user: UpdateUserDTO,
   ): Promise<{ message: string; data: UserEntity }> {
     try {
       const data = await this.userRepository.preload({ id, ...user });
