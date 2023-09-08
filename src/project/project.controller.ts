@@ -10,11 +10,6 @@ export class ProjectController {
     return this.projectService.getProjectsData(queryString);
   }
 
-  @Get('/user/:id')
-  getUserProjects(@Param('id') userId: string) {
-    return this.projectService.getUserProjects(userId);
-  }
-
   @Get(':id')
   getProjectDetails(@Param('id') id: string) {
     return this.projectService.getProjectDetails(id);

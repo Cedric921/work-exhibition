@@ -24,6 +24,9 @@ export class UserService {
     try {
       const data = await this.userRepository.findOne({
         where: { id: userId },
+        relations: {
+          projects: true,
+        },
       });
       return { message: 'user data', data };
     } catch (error) {

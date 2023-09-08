@@ -12,24 +12,24 @@ export class ProjectService {
 
   async getProjectsData(search?: string) {
     try {
-      const data = await this.projectRepository.find();
+      const data = await this.projectRepository.find({
+        relations: {
+          user: true,
+        },
+      });
       return { message: 'all projects', data };
     } catch (error) {
       throw new InternalServerErrorException(error);
     }
   }
 
-  async getUserProjects(userId: string) {
-    try {
-      const data = await this.projectRepository.find();
-      return { message: 'project for user ' };
-    } catch (error) {
-      throw new InternalServerErrorException(error);
-    }
-  }
-
   async getProjectDetails(projectId: string) {
-    const data = await this.projectRepository.findOneBy({ id: projectId });
+    const data = await this.projectRepository.findOne({
+      where: { id: projectId },
+      relations: {
+        user: true,
+      },
+    });
     try {
       return { message: 'project details', data };
     } catch (error) {
