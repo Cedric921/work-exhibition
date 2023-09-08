@@ -1,5 +1,6 @@
 import { TimestampEntity } from 'src/config/global.entity';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { UserEntity } from 'src/user/entities/user.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'project' })
 export abstract class ProjectEntity extends TimestampEntity {
@@ -26,4 +27,7 @@ export abstract class ProjectEntity extends TimestampEntity {
 
   @Column({ type: 'json', nullable: true })
   collaborators?: string[];
+
+  @ManyToOne((type) => UserEntity, (user) => user.projects)
+  user: UserEntity;
 }
