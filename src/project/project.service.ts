@@ -2,6 +2,8 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProjectEntity } from './entity/project.entity';
 import { Repository } from 'typeorm';
+import { CreatedProjectDTO } from './dto/project.dto';
+import { UserEntity } from 'src/user/entities/user.entity';
 
 @Injectable()
 export class ProjectService {
@@ -37,9 +39,14 @@ export class ProjectService {
     }
   }
 
-  async createProject(userId: string, dto: any) {
+  async createProject(user: UserEntity, dto: CreatedProjectDTO) {
+    const collaborators = dto.collaborators?.map((el) => ({ name: el }));
     try {
-      const data = await this.projectRepository.save(dto);
+      const data = await this.projectRepository.save({
+        ...dto,
+        collaborators: { names: collaborators },
+        user,
+      });
       return { message: 'project created', data };
     } catch (error) {
       throw new InternalServerErrorException(error);

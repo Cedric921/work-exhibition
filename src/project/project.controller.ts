@@ -1,5 +1,17 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { ProjectService } from './project.service';
+import { AuthGuard } from '@nestjs/passport';
+import { GetUser } from 'src/auth/decorator';
+import { UserEntity } from 'src/user/entities/user.entity';
+import { CreatedProjectDTO } from './dto/project.dto';
 
 @Controller('projects')
 export class ProjectController {
@@ -15,8 +27,9 @@ export class ProjectController {
     return this.projectService.getProjectDetails(id);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Post()
-  createProject(@Body() dto: any) {
-    return this.projectService.createProject('1', dto);
+  createProject(@Body() dto: CreatedProjectDTO, @GetUser() user: UserEntity) {
+    return this.projectService.createProject(user, dto);
   }
 }
