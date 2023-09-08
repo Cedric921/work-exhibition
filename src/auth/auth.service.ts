@@ -7,6 +7,7 @@ import { UnauthorizedException } from '@nestjs/common/exceptions';
 import * as argon from 'argon2';
 import { CreateUserDTO } from 'src/user/dto/user.dto';
 import { LoginDTO } from './dto';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
@@ -14,6 +15,7 @@ export class AuthService {
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
     private jwtService: JwtService,
+    private config: ConfigService,
   ) {}
 
   async register(dto: CreateUserDTO) {
@@ -26,7 +28,7 @@ export class AuthService {
 
     const hash = await argon.hash(dto.password);
 
-    const user = await this.userRepository.create({
+    const user = await this.userRepository.save({
       ...dto,
       password: hash,
     });
@@ -40,11 +42,11 @@ export class AuthService {
 
   async login(dto: LoginDTO) {
     // check if user does not exist
-    const exist = await this.userRepository.findOne({
+    const exist = await this.userRepository.findOneOrFail({
       where: { email: dto.email },
     });
 
-    if (!exist) throw new UnauthorizedException('auth error');
+    if (!exist) throw new UnauthorizedException('auth error.');
 
     const matched = await argon.verify(exist.password, dto.password);
 
@@ -61,7 +63,10 @@ export class AuthService {
     const payload = {
       sub: userId,
     };
-    const jwt = await this.jwtService.sign(payload, { expiresIn: '6d' });
+    const jwt = await this.jwtService.sign(payload, {
+      expiresIn: '6d',
+      privateKey: this.config.get('JWT_SECRET'),
+    });
     return jwt;
   }
 }

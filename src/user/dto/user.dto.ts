@@ -30,7 +30,6 @@ export class CreateUserDTO {
 
   @IsString()
   @IsNotEmpty()
-  @Min(9)
   tel: string;
 }
 
