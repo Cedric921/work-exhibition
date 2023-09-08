@@ -6,12 +6,14 @@ import { configService } from './config/config.service';
 import { AppLoggerMiddleware } from './logger.middleware';
 import { UserModule } from './user/user.module';
 import { ProjectModule } from './project/project.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(configService.getTypeOrmConfig()),
     UserModule,
     ProjectModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

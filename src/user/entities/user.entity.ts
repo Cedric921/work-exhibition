@@ -28,6 +28,8 @@ export abstract class UserEntity extends TimestampEntity {
   @Column({ type: 'text', nullable: true })
   avatar?: string;
 
-  @OneToMany((type) => ProjectEntity, (project) => project.user)
+  @OneToMany((type) => ProjectEntity, (project) => project.user, {
+    cascade: ['insert', 'update'],
+  })
   projects: ProjectEntity[];
 }

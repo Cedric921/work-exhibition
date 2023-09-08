@@ -28,6 +28,8 @@ export abstract class ProjectEntity extends TimestampEntity {
   @Column({ type: 'json', nullable: true })
   collaborators?: string[];
 
-  @ManyToOne((type) => UserEntity, (user) => user.projects)
+  @ManyToOne((type) => UserEntity, (user) => user.projects, {
+    cascade: ['insert', 'update'],
+  })
   user: UserEntity;
 }

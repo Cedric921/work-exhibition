@@ -22,7 +22,9 @@ export class UserService {
 
   async getUserData(userId: string) {
     try {
-      const data = await this.userRepository.findOne({ where: { id: userId } });
+      const data = await this.userRepository.findOne({
+        where: { id: userId },
+      });
       return { message: 'user data', data };
     } catch (error) {
       throw new InternalServerErrorException(error);
