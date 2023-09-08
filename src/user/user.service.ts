@@ -20,10 +20,24 @@ export class UserService {
   }
 
   async getUserData(userId: string) {
-    return 'get user data + projects';
+    try {
+      const data = await this.userRepository.findOne({ where: { id: userId } });
+      return { message: 'user data', data };
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
   }
 
-  async updateUserData(userId: string, dto: any) {
-    return 'user data updated';
+  async updateUserData(
+    id: string,
+    user: any,
+  ): Promise<{ message: string; data: UserEntity }> {
+    try {
+      const data = await this.userRepository.preload({ id, ...user });
+      await this.userRepository.save(data);
+      return { message: 'user data updated', data };
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
   }
 }
