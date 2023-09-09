@@ -1,7 +1,7 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProjectEntity } from './entity/project.entity';
-import { Repository } from 'typeorm';
+import { Like, Repository, SelectQueryBuilder } from 'typeorm';
 import { CreatedProjectDTO } from './dto/project.dto';
 import { UserEntity } from 'src/user/entities/user.entity';
 
@@ -14,13 +14,44 @@ export class ProjectService {
 
   async getProjectsData(search?: string) {
     try {
-      const data = await this.projectRepository.find({
-        relations: {
-          user: true,
-        },
-      });
+      let data: ProjectEntity[] = [];
+      if (search?.length > 1) {
+        const res = await this.projectRepository
+          .createQueryBuilder('project')
+          .where(
+            `
+            project.title like :query OR 
+            project.description like :query OR
+            project.website like :query OR
+            project.activityDomain like :query`,
+            { query: `%${search}%` },
+          )
+          .innerJoinAndMapOne('user', 'user', 'user.id = project.userId')
+          .getMany();
+
+        // .find({
+        //   where: {
+        //     title: Like(`%${search}%`),
+        //     description: Like(`%${search}%`),
+        //     website: Like(`%${search}%`),
+        //     activityDomain: Like(`%${search}%`),
+        //   },
+        //   relations: {
+        //     user: true,
+        //   },
+        // });
+        data = [...res];
+      } else {
+        const res2 = await this.projectRepository.find({
+          relations: {
+            user: true,
+          },
+        });
+        data = [...res2];
+      }
       return { message: 'all projects', data };
     } catch (error) {
+      console.log(error);
       throw new InternalServerErrorException(error);
     }
   }

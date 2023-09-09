@@ -57,4 +57,14 @@ export class UserService {
       throw new InternalServerErrorException(error);
     }
   }
+
+  async updateAvatar(id: string, imageUrl: string) {
+    try {
+      const data = await this.userRepository.preload({ id, avatar: imageUrl });
+      await this.userRepository.save(data);
+      return { message: 'user data updated', data };
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
+  }
 }
