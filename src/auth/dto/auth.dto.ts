@@ -9,3 +9,17 @@ export class LoginDTO {
   @IsString()
   password: string;
 }
+
+export class EditPasswordDTO {
+  @IsNotEmpty()
+  @IsString()
+  oldPassword: string;
+
+  @IsNotEmpty()
+  @IsString()
+  newPassword: string;
+
+  @IsNotEmpty()
+  @IsString()
+  confirmPassword: string;
+}
