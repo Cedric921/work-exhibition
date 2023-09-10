@@ -8,6 +8,7 @@ import { UserModule } from './user/user.module';
 import { ProjectModule } from './project/project.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { AwsUploadFileModule } from './aws-upload-file/aws-upload-file.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { ConfigModule } from '@nestjs/config';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    AwsUploadFileModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -34,16 +34,16 @@ export class UserService {
     }
   }
 
-  async createUser(dto: CreateUserDTO) {
-    try {
-      const data = await this.userRepository.save(dto);
-      delete data.password;
+  // async createUser(dto: CreateUserDTO) {
+  //   try {
+  //     const data = await this.userRepository.save(dto);
+  //     delete data.password;
 
-      return { message: 'user data', data };
-    } catch (error) {
-      throw new InternalServerErrorException(error);
-    }
-  }
+  //     return { message: 'user data', data };
+  //   } catch (error) {
+  //     throw new InternalServerErrorException(error);
+  //   }
+  // }
 
   async updateUserData(
     id: string,

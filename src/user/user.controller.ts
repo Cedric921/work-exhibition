@@ -3,13 +3,16 @@ import { UserService } from './user.service';
 import { CreateUserDTO, UpdateUserDTO } from './dto/user.dto';
 import {
   Post,
+  UploadedFiles,
   // UploadedFiles,
   UseGuards,
+  UseInterceptors,
   // UseInterceptors,
 } from '@nestjs/common/decorators';
 import { GetUser } from 'src/auth/decorator';
 import { UserEntity } from './entities/user.entity';
 import { AuthGuard } from '@nestjs/passport';
+import { FileInterceptor } from '@nestjs/platform-express';
 // import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('users')
@@ -26,18 +29,17 @@ export class UserController {
     return this.userService.getUserData(userId);
   }
 
-  @Post()
-  createUser(@Body() dto: CreateUserDTO) {
-    return this.userService.createUser(dto);
-  }
+  // @Post()
+  // createUser(@Body() dto: CreateUserDTO) {
+  //   return this.userService.createUser(dto);
+  // }
 
   @UseGuards(AuthGuard('jwt'))
   @Put('avatar')
-  // @UseInterceptors(FileInterceptor('files', multerConfig))
-  updateAvatar(
-    @GetUser() user: UserEntity,
-    // @UploadedFiles() files: any
-  ) {
+  @UseInterceptors(FileInterceptor('files'))
+  updateAvatar(@GetUser() user: UserEntity, @UploadedFiles() files: any) {
+    console.log({ files });
+    // upload image to aws s3 logic here
     return this.userService.updateAvatar(user.id, '');
   }
 
