@@ -9,6 +9,7 @@ async function bootstrap() {
     origin: '*',
   });
   app.useGlobalPipes(new ValidationPipe());
-  await app.listen(3000);
+  app.setGlobalPrefix('/api/v1/');
+  await app.listen(3025);
 }
 bootstrap();
