@@ -171,7 +171,10 @@ base URI `https://work-exhibition.onrender.com/api/v1`
                 "duration": "10 year",
                 "website": null,
                 "budget": "6000",
-                "imagesUrl": null,
+                "imagesUrl": [
+                  "https://res.cloudinary.com/dteyspzef/image/upload/v1694433388/file_gvpr22.jpg",
+                  "https://res.cloudinary.com/dteyspzef/image/upload/v1694433433/file_czr4z3.png"
+            ],
                 "collaborators": {
                     "names": [
                         {
@@ -243,7 +246,10 @@ base URI `https://work-exhibition.onrender.com/api/v1`
             "duration": "10 year",
             "website": null,
             "budget": "6000",
-            "imagesUrl": null,
+            "imagesUrl": [
+                "https://res.cloudinary.com/dteyspzef/image/upload/v1694433388/file_gvpr22.jpg",
+                "https://res.cloudinary.com/dteyspzef/image/upload/v1694433433/file_czr4z3.png"
+            ],
             "collaborators": {
                 "names": [
                     {
@@ -360,7 +366,10 @@ base URI `https://work-exhibition.onrender.com/api/v1`
         "duration": "10 year",
         "website": null,
         "budget": "6000",
-        "imagesUrl": null,
+        "imagesUrl": [
+          "https://res.cloudinary.com/dteyspzef/image/upload/v1694433388/file_gvpr22.jpg",
+          "https://res.cloudinary.com/dteyspzef/image/upload/v1694433433/file_czr4z3.png"
+            ],
         "collaborators": {
             "names": [
                 {

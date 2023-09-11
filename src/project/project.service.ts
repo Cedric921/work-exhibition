@@ -16,31 +16,18 @@ export class ProjectService {
     try {
       let data: ProjectEntity[] = [];
       if (search?.length > 1) {
-        const res = await this.projectRepository
-          // .createQueryBuilder('project')
-          // .where(
-          //   `
-          //   project.title like :query OR
-          //   project.description like :query OR
-          //   project.website like :query OR
-          //   project.activityDomain like :query`,
-          //   { query: `%${search}%` },
-          // )
-          // .innerJoinAndMapOne('user', 'u', 'project.userId = u.id')
-          // .getMany();
-
-          .find({
-            where: [
-              { title: Like(`%${search}%`) },
-              { description: Like(`%${search}%`) },
-              { website: Like(`%${search}%`) },
-              { activityDomain: Like(`%${search}%`) },
-              { duration: Like(`%${search}%`) },
-            ],
-            relations: {
-              user: true,
-            },
-          });
+        const res = await this.projectRepository.find({
+          where: [
+            { title: Like(`%${search}%`) },
+            { description: Like(`%${search}%`) },
+            { website: Like(`%${search}%`) },
+            { activityDomain: Like(`%${search}%`) },
+            { duration: Like(`%${search}%`) },
+          ],
+          relations: {
+            user: true,
+          },
+        });
         data = [...res];
       } else {
         const res2 = await this.projectRepository.find({
@@ -50,7 +37,11 @@ export class ProjectService {
         });
         data = [...res2];
       }
-      return { message: 'all projects', data };
+      const res = data?.map((el) => ({
+        ...el,
+        imagesUrl: el.imagesUrl?.split('@@') ?? [],
+      }));
+      return { message: 'all projects', data: res };
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException(error);
@@ -69,7 +60,7 @@ export class ProjectService {
     try {
       return {
         message: 'project details',
-        data: { ...data, imagesUrl: data.imagesUrl?.split('@@') },
+        data: { ...data, imagesUrl: data.imagesUrl?.split('@@') ?? [] },
       };
     } catch (error) {
       throw new InternalServerErrorException(error);
