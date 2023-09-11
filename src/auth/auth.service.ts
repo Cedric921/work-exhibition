@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from 'src/user/entities/user.entity';
-import { Repository } from 'typeorm';
+import { Repository, TypeORMError } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import {
   ConflictException,
+  ForbiddenException,
   InternalServerErrorException,
   UnauthorizedException,
 } from '@nestjs/common/exceptions';
@@ -71,7 +72,11 @@ export class AuthService {
 
       return { message: 'logged in ', data: { ...exist, token } };
     } catch (error) {
-      throw new InternalServerErrorException(error);
+      if (error instanceof TypeORMError) {
+        throw new ForbiddenException(error.message);
+      } else {
+        throw new ForbiddenException('Auth error');
+      }
     }
   }
 

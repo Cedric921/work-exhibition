@@ -26,7 +26,7 @@ export abstract class ProjectEntity extends TimestampEntity {
   budget: string;
 
   @Column({ nullable: true, type: 'text' })
-  imagesUrl?: any;
+  imagesUrl?: string;
 
   @Column({ type: 'json', nullable: true })
   collaborators?: any;
