@@ -1,8 +1,10 @@
+import { AwsUploadFileService } from 'src/aws-upload-file/aws-upload-file.service';
 import { Body, Controller, Get, Param, Put } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDTO, UpdateUserDTO } from './dto/user.dto';
 import {
   Post,
+  UploadedFile,
   UploadedFiles,
   // UploadedFiles,
   UseGuards,
@@ -17,7 +19,10 @@ import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('users')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly awsUpload: AwsUploadFileService,
+  ) {}
 
   @Get()
   getAllUsers() {
@@ -37,10 +42,14 @@ export class UserController {
   @UseGuards(AuthGuard('jwt'))
   @Put('avatar')
   @UseInterceptors(FileInterceptor('files'))
-  updateAvatar(@GetUser() user: UserEntity, @UploadedFiles() files: any) {
-    console.log({ files });
+  async updateAvatar(
+    @GetUser() user: UserEntity,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    console.log({ file });
     // upload image to aws s3 logic here
-    return this.userService.updateAvatar(user.id, '');
+    const { Location } = await this.awsUpload.uploadFile(file);
+    return this.userService.updateAvatar(user.id, Location);
   }
 
   @Put(':id')
