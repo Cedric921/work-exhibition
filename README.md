@@ -140,15 +140,14 @@ base URI `https://work-exhibition.onrender.com/api/v1`
 - user data
 
 ```bash
-    /users/:userId
+    /users/:userId [GET]
 ```
 
 ```js
   // response
   {
     "message": "user data",
-    "data":
-      {
+    "data": {
         "createdAt": "2023-09-11T09:16:40.955Z",
         "updatedAt": "2023-09-11T09:16:40.955Z",
         "deletedAt": null,
@@ -160,7 +159,216 @@ base URI `https://work-exhibition.onrender.com/api/v1`
         "biography": null,
         "tel": "97949392922",
         "avatar": null,
-        "projects": []
+        "projects": [
+            {
+                "createdAt": "2023-09-11T09:41:02.114Z",
+                "updatedAt": "2023-09-11T09:41:02.114Z",
+                "deletedAt": null,
+                "id": "58ca2d1b-ee3b-41c1-8d22-29d346ae847d",
+                "title": "start up project",
+                "description": "start up for devs",
+                "activityDomain": "tech",
+                "duration": "10 year",
+                "website": null,
+                "budget": "6000",
+                "imagesUrl": null,
+                "collaborators": {
+                    "names": [
+                        {
+                            "name": "ben"
+                        },
+                        {
+                            "name": "ced"
+                        },
+                        {
+                            "name": "dav"
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}
+```
+
+- change avatar
+
+```bash
+  // route here
+```
+
+```js
+// reponse
+```
+
+### projects
+
+- projects list
+
+```js
+  /projects [GET] //all
+  /projects?q=education  [GET]//with  search param
+```
+
+```js
+  {
+    "message": "all projects",
+    "data": [
+        {
+            "createdAt": "2023-09-11T09:41:02.114Z",
+            "updatedAt": "2023-09-11T09:41:02.114Z",
+            "deletedAt": null,
+            "id": "58ca2d1b-ee3b-41c1-8d22-29d346ae847d",
+            "title": "start up project",
+            "description": "start up for devs",
+            "activityDomain": "tech",
+            "duration": "10 year",
+            "website": null,
+            "budget": "6000",
+            "imagesUrl": null,
+            "collaborators": {
+                "names": [
+                    {
+                        "name": "ben"
+                    },
+                    {
+                        "name": "ced"
+                    },
+                    {
+                        "name": "dav"
+                    }
+                ]
+            },
+            "user": {
+                "createdAt": "2023-09-11T09:16:40.955Z",
+                "updatedAt": "2023-09-11T09:16:40.955Z",
+                "deletedAt": null,
+                "id": "e829ce5a-9361-4013-9c3a-52b9dde6811a",
+                "name": "cedric",
+                "email": "ckarungu921@gmail.com",
+                "password": "$argon2id$v=19$m=65536,t=3,p=4$5RCWeycd9TxwevPWSOvj7Q$qAOI7QaGA+9VoTSwi7CehyJVfJ2iPpY14ft+BlOaNSQ",
+                "lastName": "karungu",
+                "biography": null,
+                "tel": "97949392922",
+                "avatar": null
+            }
+        }
+    ]
+  }
+
+```
+
+- create
+
+```bash
+  /projects [POST]
+```
+
+```js
+  // body req
+  {
+    "title": "start up project",
+    "description":"start up for devs",
+    "activityDomain":"tech",
+    "duration": "10 year",
+    "budget": "6000",
+    "collaborators": ["ben", "ced", "dav"]
+  }
+  // req header authorization
+  beader token
+
+  // response
+  {
+    "message": "project created",
+    "data": {
+        "title": "start up project",
+        "description": "start up for devs",
+        "activityDomain": "tech",
+        "duration": "10 year",
+        "budget": "6000",
+        "collaborators": {
+            "names": [
+                {
+                    "name": "ben"
+                },
+                {
+                    "name": "ced"
+                },
+                {
+                    "name": "dav"
+                }
+            ]
+        },
+        "user": {
+            "createdAt": "2023-09-11T09:16:40.955Z",
+            "updatedAt": "2023-09-11T09:16:40.955Z",
+            "deletedAt": null,
+            "id": "e829ce5a-9361-4013-9c3a-52b9dde6811a",
+            "name": "cedric",
+            "email": "ckarungu921@gmail.com",
+            "lastName": "karungu",
+            "biography": null,
+            "tel": "97949392922",
+            "avatar": null
+        },
+        "deletedAt": null,
+        "website": null,
+        "imagesUrl": null,
+        "createdAt": "2023-09-11T09:41:02.114Z",
+        "updatedAt": "2023-09-11T09:41:02.114Z",
+        "id": "58ca2d1b-ee3b-41c1-8d22-29d346ae847d"
+    }
+  }
+```
+
+- projects details
+
+```js
+  /projects/:projectID
+```
+
+```js
+  // response
+  {
+    "message": "project details",
+    "data": {
+        "createdAt": "2023-09-11T09:41:02.114Z",
+        "updatedAt": "2023-09-11T09:41:02.114Z",
+        "deletedAt": null,
+        "id": "58ca2d1b-ee3b-41c1-8d22-29d346ae847d",
+        "title": "start up project",
+        "description": "start up for devs",
+        "activityDomain": "tech",
+        "duration": "10 year",
+        "website": null,
+        "budget": "6000",
+        "imagesUrl": null,
+        "collaborators": {
+            "names": [
+                {
+                    "name": "ben"
+                },
+                {
+                    "name": "ced"
+                },
+                {
+                    "name": "dav"
+                }
+            ]
+        },
+        "user": {
+            "createdAt": "2023-09-11T09:16:40.955Z",
+            "updatedAt": "2023-09-11T09:16:40.955Z",
+            "deletedAt": null,
+            "id": "e829ce5a-9361-4013-9c3a-52b9dde6811a",
+            "name": "cedric",
+            "email": "ckarungu921@gmail.com",
+            "password": "$argon2id$v=19$m=65536,t=3,p=4$5RCWeycd9TxwevPWSOvj7Q$qAOI7QaGA+9VoTSwi7CehyJVfJ2iPpY14ft+BlOaNSQ",
+            "lastName": "karungu",
+            "biography": null,
+            "tel": "97949392922",
+            "avatar": null
+        }
     }
   }
 ```
