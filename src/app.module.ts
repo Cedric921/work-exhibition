@@ -9,6 +9,7 @@ import { ProjectModule } from './project/project.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { AwsUploadFileModule } from './aws-upload-file/aws-upload-file.module';
+import { CloudinaryUploadFileModule } from './cloudinary-upload-file/cloudinary-upload-file.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { AwsUploadFileModule } from './aws-upload-file/aws-upload-file.module';
       isGlobal: true,
     }),
     AwsUploadFileModule,
+    CloudinaryUploadFileModule,
   ],
   controllers: [AppController],
   providers: [AppService],

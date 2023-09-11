@@ -15,6 +15,8 @@ import { GetUser } from 'src/auth/decorator';
 import { UserEntity } from './entities/user.entity';
 import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { ConfigService } from '@nestjs/config';
+import { CloudinaryUploadFileService } from 'src/cloudinary-upload-file/cloudinary-upload-file.service';
 // import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('users')
@@ -22,6 +24,8 @@ export class UserController {
   constructor(
     private readonly userService: UserService,
     private readonly awsUpload: AwsUploadFileService,
+    private readonly config: ConfigService,
+    private readonly cloudinaryUpload: CloudinaryUploadFileService,
   ) {}
 
   @Get()
@@ -47,9 +51,18 @@ export class UserController {
     @UploadedFile() file: Express.Multer.File,
   ) {
     console.log({ file });
-    // upload image to aws s3 logic here
-    const { Location } = await this.awsUpload.uploadFile(file);
-    return this.userService.updateAvatar(user.id, Location);
+    let uploadedFileURL = '';
+    const fileService = this.config.get('FILES_UPLOAD_SERVICE');
+    if (fileService === 'AWS') {
+      // upload image to aws s3 logic here
+      const { Location } = await this.awsUpload.uploadFile(file);
+      uploadedFileURL = Location;
+    } else {
+      // upload image to cloudinary here
+      const { secure_url } = await this.cloudinaryUpload.upload(file);
+      uploadedFileURL = secure_url;
+    }
+    return this.userService.updateAvatar(user.id, uploadedFileURL);
   }
 
   @Put(':id')
