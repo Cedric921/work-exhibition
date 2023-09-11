@@ -194,11 +194,29 @@ base URI `https://work-exhibition.onrender.com/api/v1`
 - change avatar
 
 ```bash
-  // route here
+  /users/avatar [PUT]
 ```
 
 ```js
+// req need bear token
+// send file in files field (form data)
 // reponse
+  {
+    "message": "user data updated",
+    "data": {
+        "createdAt": "2023-09-11T09:16:40.955Z",
+        "updatedAt": "2023-09-11T10:47:28.942Z",
+        "deletedAt": null,
+        "id": "e829ce5a-9361-4013-9c3a-52b9dde6811a",
+        "name": "cedric",
+        "email": "ckarungu921@gmail.com",
+        "password": "$argon2id$v=19$m=65536,t=3,p=4$5RCWeycd9TxwevPWSOvj7Q$qAOI7QaGA+9VoTSwi7CehyJVfJ2iPpY14ft+BlOaNSQ",
+        "lastName": "karungu",
+        "biography": null,
+        "tel": "97949392922",
+        "avatar": "https://res.cloudinary.com/dteyspzef/image/upload/v1694429248/file_zlir9v.png"
+    }
+  }
 ```
 
 ### projects

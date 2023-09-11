@@ -62,7 +62,10 @@ export class UserService {
     try {
       const data = await this.userRepository.preload({ id, avatar: imageUrl });
       await this.userRepository.save(data);
-      return { message: 'user data updated', data };
+
+      delete data.password;
+
+      return { message: 'user avatar updated', data };
     } catch (error) {
       throw new InternalServerErrorException(error);
     }
